@@ -17,7 +17,7 @@ fn extend_key(base_key: &u16, target_len: usize) -> Vec<u8> {
     key_ext
 }
 
-fn encode(text: &Vec<u8>, key: &Vec<u8>) -> Vec<u8> {
+fn cipher(text: &Vec<u8>, key: &Vec<u8>) -> Vec<u8> {
     let mut cipher: Vec<u8> = Vec::with_capacity(text.len());
     for i in 0..text.len() {
         cipher.push(text[i] ^ key[i])
@@ -30,8 +30,8 @@ fn vigenere(plaintext: &str, key: u16) -> String {
     let text_b = Vec::from(plaintext.as_bytes());
     let key_ext = extend_key(&key, text_b.len());
 
-    let cipher = encode(&text_b, &key_ext);
-    let cipher_text = match String::from_utf8_lossy(&cipher) {
+    let cipher_b = cipher(&text_b, &key_ext);
+    let cipher_text = match String::from_utf8_lossy(&cipher_b) {
         Cow::Owned(v) => v,
         Cow::Borrowed(v) => v.to_string(),
     };
