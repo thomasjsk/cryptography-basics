@@ -1,7 +1,7 @@
 use hex;
 use std::borrow::Cow;
 
-fn extend_key(base_key: &u16, target_len: usize) -> Vec<u8> {
+fn extrapolate_key(base_key: &u16, target_len: usize) -> Vec<u8> {
     let key_b = base_key.to_be_bytes();
     let multiplier = target_len / key_b.len();
 
@@ -19,7 +19,7 @@ fn extend_key(base_key: &u16, target_len: usize) -> Vec<u8> {
 
 fn cipher(text: &str, key_hex: &u16) -> Vec<u8> {
     let text_b = Vec::from(text.as_bytes());
-    let key_b = extend_key(&key_hex, text.len());
+    let key_b = extrapolate_key(&key_hex, text.len());
 
     let mut cipher: Vec<u8> = Vec::with_capacity(text_b.len());
     for i in 0..text_b.len() {
