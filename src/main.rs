@@ -35,7 +35,7 @@ fn vigenere(plaintext: &str, key: u16) -> String {
         Cow::Owned(v) => v,
         Cow::Borrowed(v) => v.to_string(),
     };
-    let _cipher_hex = hex::encode(&cipher).to_uppercase();
+    let _cipher_hex = hex::encode(&cipher_bytes).to_uppercase();
 
     ciphertext
 }
