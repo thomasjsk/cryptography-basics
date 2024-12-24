@@ -17,27 +17,27 @@ fn extend_key(base_key: &u16, target_len: usize) -> Vec<u8> {
     key_ext
 }
 
-fn cipher(text: &Vec<u8>, key: &Vec<u8>) -> Vec<u8> {
-    let mut cipher: Vec<u8> = Vec::with_capacity(text.len());
-    for i in 0..text.len() {
-        cipher.push(text[i] ^ key[i])
+fn cipher(text: &str, key_hex: &u16) -> Vec<u8> {
+    let text_b = Vec::from(text.as_bytes());
+    let key_b = extend_key(&key_hex, text.len());
+
+    let mut cipher: Vec<u8> = Vec::with_capacity(text_b.len());
+    for i in 0..text_b.len() {
+        cipher.push(text_b[i] ^ key_b[i])
     }
 
     cipher
 }
 
 fn vigenere(plaintext: &str, key: u16) -> String {
-    let text_b = Vec::from(plaintext.as_bytes());
-    let key_ext = extend_key(&key, text_b.len());
-
-    let cipher_b = cipher(&text_b, &key_ext);
-    let cipher_text = match String::from_utf8_lossy(&cipher_b) {
+    let cipher_bytes = cipher(plaintext, &key);
+    let ciphertext = match String::from_utf8_lossy(&cipher_bytes) {
         Cow::Owned(v) => v,
         Cow::Borrowed(v) => v.to_string(),
     };
     let _cipher_hex = hex::encode(&cipher).to_uppercase();
 
-    cipher_text
+    ciphertext
 }
 
 fn main() {
