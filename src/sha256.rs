@@ -117,20 +117,3 @@ pub fn run(message: &str) {
     let hash = sha256(message.as_bytes());
     println!("SHA-256: {}", hash);
 }
-
-// #[cfg(test)]
-// mod sha256_tests {
-//     use super::*;
-//
-//     #[test]
-//     fn pad_message_test() {
-//         let word = b"foo";
-//         let padded = pad_message(word);
-//         assert_eq!(padded[0..4], [102, 111, 111, 128]);
-//         assert_eq!(padded.len(), 64);
-//         assert_eq!(
-//             padded[padded.len() - 1..padded.len()],
-//             [(word.len() * 8) as u8]
-//         );
-//     }
-// }
